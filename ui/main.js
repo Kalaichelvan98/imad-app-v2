@@ -12,6 +12,6 @@ button.onclick=function(){
     }    
     };
     //make the request
-        request.open('GET','http://kalaichelvan98.imad.hasura-app.io/counter',true)
+        request.open('GET','http://kalaichelvan98.imad.hasura-app.io/counter',true);
         request.send(null);
 };
