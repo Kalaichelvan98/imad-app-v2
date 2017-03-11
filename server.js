@@ -13,7 +13,6 @@ var config={
 };
 var app = express();
 app.use(morgan('combined'));
-
 var articles={
     'article-one':{
         title:'article-one|kalaichelvan',
@@ -43,8 +42,7 @@ var articles={
         </p>`
     },
 };
-
-function createTemplatedata(){
+function createTemplate (data){
     var title=data.title;
     var date=data.date;
     var heading=data.heading;
