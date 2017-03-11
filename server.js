@@ -19,37 +19,62 @@ var articles={
         title:'article-one|kalaichelvan',
         heading:'article-one',
         date:'sep 05-2016',
-        content:
+        content:`
         <p>
            This is my first Article.This is my first Article.This is my first Article.This is my first Article.
-        </p>
-        <p>
-           This is my first Article.This is my first Article.This is my first Article.This is my first Article.
-        </p>
-        <p>
-           This is my first Article.This is my first Article.This is my first Article.This is my first Article.
-        </p>
-    },
+        </p>`
+        },
     'article-two':{
         title:'article-two|kalaichelvan',
         heading:'article-two',
         date:'sep 06-2016',
-        content:
+        content:`
         <p>
            This is my second Article.This is my second Article.
-        </p>
+        </p>`
     },
     'article-three':{
         title:'article-three|kalaichelvan',
         heading:'article-three',
         date:'sep 07-2016',
-        content:
+        content:`
         <p>
            This is my third Article.
-        </p>
+        </p>`
     },
 };
-function createTemplatedata(){}
+
+function createTemplatedata(){
+    var title=data.title;
+    var date=data.date;
+    var heading=data.heading;
+    var content=data.content;
+    var htmltemplate=`
+    <html>
+    <head>
+       <title> 
+       ${title}
+       </title>
+    </head>
+    <body>
+        <div class="container">
+        <div>
+        <a href='/'>Home</a>
+        </div>
+        <hr/>
+        <h3>
+        ${heading}
+        </h3>
+        <div>
+        ${data}
+        </div>
+        <div>
+        ${content}
+        </div>
+        </body>
+</html>
+`;
+}
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
@@ -73,13 +98,13 @@ app.get('/counter',function(req,res){
 });
 
 var names=[];
-app.get('/submit-name',functio(req,res){
+app.get('/submit-name',function(req,res){
    var name = req.query.name;
    names.push(name);
    res.send(JSON.stringify(names));
 });
-app.get('/article/:articleName',function(req,res){
-   var articlename=req.paarams.articleName;
+app.get('/:articleName',function(req,res){
+   var articlename=req.params.articleName;
    res.send(createTemplate(articles[articleName]));
 });
 
