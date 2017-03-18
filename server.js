@@ -97,11 +97,37 @@ app.post('/createuser',function(req,res){
    var dbString = hash(password, salt);
    pool.query('INSERT INTO "user" (username, password) VALUES ($1, $2)',[username,dbString], function(err,result){
        if(err){
-           res.status(500).send(err.toString());}
+           res.status(500).send(err.toString());
+           
+       }
            else{
                res.send('User successfully created:' +username);
            }
    });  
+});
+app.post('/login',function(req,res){
+    var username = req.body.username;
+   var password = req.body.password;
+   pool.query('SELECT * from "user" username =$1',[username], function(err,result){
+       if(err){
+           res.status(500).send(err.toString());}
+           else{
+               if(result.rows.length===0){
+                   res.send(403).send('Username/password is invalid');
+               }
+               else{
+                var dbString = result.rows[0].password;
+                var salt = dbString.split('$')[2];
+                var hashedpassword = hash(password,salt);
+                if(hashedpassword === dbString){
+                    res.send('credentials correct');
+                }
+                else{
+                res.send(403).send('Username/password is invalid');    
+                }
+               }
+           }
+   });
 });
 var pool = new Pool(config);
 app.get('/test_db',function(req,res){
