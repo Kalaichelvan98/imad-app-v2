@@ -84,6 +84,9 @@ function hash(input,salt){
     return ['pbkdf2','10000',salt,hashed.toString('hex')].join('$');
 }
 app.get('/hash/:input',function(req,res){
+    //username, password
+    //{"username":"kalai98","password":"password"}
+    //JSON
     var hashedstring= hash(req.params.input,'this-is-some-random-string');
     res.send(hashedstring);
 });
